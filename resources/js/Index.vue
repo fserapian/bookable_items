@@ -7,7 +7,7 @@
                 <router-link :to="{ name: 'home' }">Home</router-link>
             </h5>
             <nav class="my-2 my-md-0 mr-md-3">
-                <router-link :to="{ name: 'second' }">Second</router-link>
+                <router-link :to="{ name: 'bookable' }">Second</router-link>
             </nav>
         </div>
 

@@ -14,6 +14,19 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// Route::get('bookables', function () {
+//     return Bookable::all();
+// });
+
+// Route::get('bookables/{id}', function ($bookableId) {
+//     return Bookable::findOrFail($bookableId);
+// });
+
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+// Route::get('bookables', 'Api\BookableController@index');
+// Route::get('bookables/{id}', 'Api\BookableController@show');
+
+Route::apiResource('bookables', 'Api\BookableController');
