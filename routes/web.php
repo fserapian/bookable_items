@@ -14,29 +14,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::get('/{any?}', function () {
-//     return view('welcome');
-// })->where('any', '^(?!api\/)[\/\w\.-]*');
-
-class A
-{
-    public $firstName = 'a';
-    public $lastName = 'A';
-}
-class B
-{
-    public $firstName = 'b';
-    public $lastName = 'B';
-}
-
-
-Route::get('/test', function () {
-    $obj1 = new A();
-    $obj2 = new B();
-
-    $a = clone $obj1->firstName;
-
-    // var_dump($a);
-    // var_dump($obj1);
-    dd($a === $obj1);
-});
+Route::get('/{any?}', function () {
+    return view('welcome');
+})->where('any', '^(?!api\/)[\/\w\.-]*');
