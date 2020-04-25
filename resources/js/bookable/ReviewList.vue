@@ -1,19 +1,19 @@
 <template>
     <div class="reviews d-none d-md-block">
         <h2 class="mb-3">Reviews</h2>
-        <div class="border-bottom mb-3" v-for="i in 4" :key="i">
+        <div class="border-bottom mb-3" v-for="(review, i) in reviews" :key="i">
             <div class="row">
                 <div class="col-md-6">
-                    <h5>Name</h5>
-                    <p class="text-muted">Date and time</p>
+                    <h5>Fadi S.</h5>
+                    <p class="text-muted">{{ review.created_at }}</p>
                 </div>
                 <div class="col-md-6 d-flex justify-content-end">
-                    <span>Rating</span>
+                    <span>{{ review.rating }}</span>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    <p>This is the conent of the review</p>
+                    <p>{{ review.content }}</p>
                 </div>
             </div>
         </div>
@@ -21,7 +21,27 @@
 </template>
 
 <script>
-export default {};
+export default {
+    props: {
+        bookableId: String
+    },
+    data() {
+        return {
+            loading: false,
+            reviews: []
+        };
+    },
+    created() {
+        this.loading = true;
+        axios
+            .get(
+                `http://bookable_items.test/api/bookables/${this.bookableId}/reviews`
+            )
+            .then(res => (this.reviews = res.data.data))
+            .catch(err => console.log(err))
+            .then(() => (this.loading = false));
+    }
+};
 </script>
 
 <style scoped>
