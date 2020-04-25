@@ -2,10 +2,12 @@
     <div>
         <h5>
             <span>Check Availability</span>
-            <span v-if="noAvailability" class="text-danger"
-                >(NOT AVAILABLE)</span
+            <span v-if="noAvailability" class="text-danger text-uppercase"
+                >(not available)</span
             >
-            <span v-if="hasAvailability" class="text-success">(AVAILABLE)</span>
+            <span v-if="hasAvailability" class="text-success text-uppercase"
+                >(available)</span
+            >
         </h5>
 
         <form class="form-row">
