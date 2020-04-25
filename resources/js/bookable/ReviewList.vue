@@ -5,7 +5,9 @@
             <div class="row">
                 <div class="col-md-6">
                     <h5>Fadi S.</h5>
-                    <p class="text-muted">{{ review.created_at }}</p>
+                    <p class="text-muted">
+                        {{ review.created_at | fromNow }}
+                    </p>
                 </div>
                 <div class="col-md-6 d-flex justify-content-end">
                     <span>{{ review.rating }}</span>
