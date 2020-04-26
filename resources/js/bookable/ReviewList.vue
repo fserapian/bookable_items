@@ -1,7 +1,13 @@
 <template>
     <div class="reviews d-none d-md-block">
         <h2 class="mb-3">Reviews</h2>
-        <div class="border-bottom mb-3" v-for="(review, i) in reviews" :key="i">
+        <div v-if="loading">Loading...</div>
+        <div
+            v-else
+            class="border-bottom mb-3"
+            v-for="(review, i) in reviews"
+            :key="i"
+        >
             <div class="row">
                 <div class="col-md-6">
                     <h5>Fadi S.</h5>
@@ -11,6 +17,7 @@
                 </div>
                 <div class="col-md-6 d-flex justify-content-end">
                     <span>{{ review.rating }}</span>
+                    <star-rating></star-rating>
                 </div>
             </div>
             <div class="row">

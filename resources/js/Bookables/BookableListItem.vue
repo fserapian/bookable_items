@@ -20,9 +20,6 @@ export default {
         id: Number,
         title: String,
         description: String
-    },
-    mounted() {
-        console.log(this.title);
     }
 };
 </script>

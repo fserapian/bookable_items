@@ -12,13 +12,13 @@
             </div>
             <div class="col-md-4">
                 <availability
-                    :bookableId="this.$route.params.id"
+                    :bookable-id="this.$route.params.id"
                 ></availability>
             </div>
         </div>
         <div class="row">
             <div class="col-md-8">
-                <review-list :bookableId="this.$route.params.id"></review-list>
+                <review-list :bookable-id="this.$route.params.id"></review-list>
             </div>
             <div class="col-md-4"></div>
         </div>
@@ -40,7 +40,6 @@ export default {
         };
     },
     created() {
-        console.log(this.$route.params.id);
         axios
             .get(
                 `http://bookable_items.test/api/bookables/${this.$route.params.id}`
