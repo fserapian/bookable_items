@@ -2250,6 +2250,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     bookableId: String
@@ -2297,16 +2299,24 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: {
+    rating: Number
+  },
   computed: {
     fullStar: function fullStar() {
-      return 4;
+      return Math.round(this.rating);
     },
     emptyStar: function emptyStar() {
-      return 1;
+      return 5 - Math.ceil(this.rating);
     },
     halfStar: function halfStar() {
-      return false;
+      var fraction = Math.round((this.rating - Math.floor(this.rating)) * 100);
+      return fraction > 0 && fraction < 50;
     }
   }
 });
@@ -56667,9 +56677,10 @@ var render = function() {
                   "div",
                   { staticClass: "col-md-6 d-flex justify-content-end" },
                   [
-                    _c("span", [_vm._v(_vm._s(review.rating))]),
-                    _vm._v(" "),
-                    _c("star-rating")
+                    _c("star-rating", {
+                      staticClass: "fa-lg",
+                      attrs: { rating: review.rating }
+                    })
                   ],
                   1
                 )
@@ -56716,9 +56727,13 @@ var render = function() {
         return _c("i", { key: "full" + star, staticClass: "fas fa-star" })
       }),
       _vm._v(" "),
-      _c("i", { staticClass: "far fa-star" }),
+      _vm.halfStar
+        ? _c("i", { staticClass: "fas fa-star-half-alt" })
+        : _vm._e(),
       _vm._v(" "),
-      _vm.halfStar ? _c("i", { staticClass: "fas fa-star-half-alt" }) : _vm._e()
+      _vm._l(_vm.emptyStar, function(star) {
+        return _c("i", { key: "empty" + star, staticClass: "far fa-star" })
+      })
     ],
     2
   )
