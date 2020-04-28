@@ -4,13 +4,13 @@
             <label class="text-muted"
                 >Rate the review (1 is worst - 5 is best)</label
             >
-            <star-rating :rating="5" class="fa-3x"></star-rating>
+            <star-rating v-model="review.rating" class="fa-3x"></star-rating>
         </div>
         <div class="form-group">
-            <label class="text-muted" for="review">Leave a review</label>
+            <label class="text-muted" for="content">Leave a review</label>
             <textarea
-                name="review"
-                id="review"
+                name="content"
+                id="content"
                 cols="30"
                 rows="10"
                 class="form-control"
@@ -21,7 +21,16 @@
 </template>
 
 <script>
-export default {};
+export default {
+    data() {
+        return {
+            review: {
+                rating: null,
+                content: null
+            }
+        };
+    }
+};
 </script>
 
 <style scoped></style>

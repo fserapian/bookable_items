@@ -2309,7 +2309,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-/* harmony default export */ __webpack_exports__["default"] = ({});
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      review: {
+        rating: null,
+        content: null
+      }
+    };
+  }
+});
 
 /***/ }),
 
@@ -2338,19 +2347,21 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
-    rating: Number
+    value: Number
   },
   computed: {
     fullStar: function fullStar() {
-      return Math.round(this.rating);
+      return Math.round(this.value);
     },
     emptyStar: function emptyStar() {
-      return 5 - Math.ceil(this.rating);
+      return 5 - Math.ceil(this.value);
     },
     halfStar: function halfStar() {
-      var fraction = Math.round((this.rating - Math.floor(this.rating)) * 100);
+      var fraction = Math.round((this.value - Math.floor(this.value)) * 100);
       return fraction > 0 && fraction < 50;
     }
   }
@@ -56714,7 +56725,7 @@ var render = function() {
                   [
                     _c("star-rating", {
                       staticClass: "fa-lg",
-                      attrs: { rating: review.rating }
+                      attrs: { value: review.rating }
                     })
                   ],
                   1
@@ -56763,7 +56774,16 @@ var render = function() {
           _vm._v("Rate the review (1 is worst - 5 is best)")
         ]),
         _vm._v(" "),
-        _c("star-rating", { staticClass: "fa-3x", attrs: { rating: 5 } })
+        _c("star-rating", {
+          staticClass: "fa-3x",
+          model: {
+            value: _vm.review.rating,
+            callback: function($$v) {
+              _vm.$set(_vm.review, "rating", $$v)
+            },
+            expression: "review.rating"
+          }
+        })
       ],
       1
     ),
@@ -56783,13 +56803,13 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "form-group" }, [
-      _c("label", { staticClass: "text-muted", attrs: { for: "review" } }, [
+      _c("label", { staticClass: "text-muted", attrs: { for: "content" } }, [
         _vm._v("Leave a review")
       ]),
       _vm._v(" "),
       _c("textarea", {
         staticClass: "form-control",
-        attrs: { name: "review", id: "review", cols: "30", rows: "10" }
+        attrs: { name: "content", id: "content", cols: "30", rows: "10" }
       })
     ])
   }
@@ -56820,7 +56840,15 @@ var render = function() {
     { staticClass: "d-flex" },
     [
       _vm._l(_vm.fullStar, function(star) {
-        return _c("i", { key: "full" + star, staticClass: "fas fa-star" })
+        return _c("i", {
+          key: "full" + star,
+          staticClass: "fas fa-star",
+          on: {
+            click: function($event) {
+              return _vm.$emit("input", star)
+            }
+          }
+        })
       }),
       _vm._v(" "),
       _vm.halfStar
@@ -56828,7 +56856,15 @@ var render = function() {
         : _vm._e(),
       _vm._v(" "),
       _vm._l(_vm.emptyStar, function(star) {
-        return _c("i", { key: "empty" + star, staticClass: "far fa-star" })
+        return _c("i", {
+          key: "empty" + star,
+          staticClass: "far fa-star",
+          on: {
+            click: function($event) {
+              return _vm.$emit("input", _vm.fullStar + star)
+            }
+          }
+        })
       })
     ],
     2
