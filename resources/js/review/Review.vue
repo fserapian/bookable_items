@@ -1,13 +1,8 @@
 <template>
     <div class="row">
-        <div
-            :class="[
-                { 'col-md-4': loading || !isBookingReviewed },
-                { 'd-none': !loading && isBookingReviewed }
-            ]"
-        >
+        <div :class="[{ 'col-md-4': twoColumns }, { 'd-none': oneColumn }]">
             <div v-if="loading">Loading...</div>
-            <div v-else>
+            <div v-if="hasBooking">
                 <div class="card">
                     <div class="card-body">
                         <p>
@@ -27,12 +22,7 @@
                 </div>
             </div>
         </div>
-        <div
-            :class="[
-                { 'col-md-8': loading || !isBookingReviewed },
-                { 'col-md-12': !loading && isBookingReviewed }
-            ]"
-        >
+        <div :class="[{ 'col-md-8': twoColumns }, { 'col-md-12': oneColumn }]">
             <div v-if="loading">
                 <h2>Loading...</h2>
             </div>
@@ -119,6 +109,12 @@ export default {
         },
         hasBooking() {
             return this.booking !== null;
+        },
+        oneColumn() {
+            return !this.loading && this.isBookingReviewed;
+        },
+        twoColumns() {
+            return this.loading || !this.isBookingReviewed;
         }
     }
 };

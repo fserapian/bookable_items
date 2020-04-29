@@ -2352,16 +2352,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2399,6 +2389,12 @@ __webpack_require__.r(__webpack_exports__);
     },
     hasBooking: function hasBooking() {
       return this.booking !== null;
+    },
+    oneColumn: function oneColumn() {
+      return !this.loading && this.isBookingReviewed;
+    },
+    twoColumns: function twoColumns() {
+      return this.loading || !this.isBookingReviewed;
     }
   }
 });
@@ -56851,16 +56847,12 @@ var render = function() {
   return _c("div", { staticClass: "row" }, [
     _c(
       "div",
-      {
-        class: [
-          { "col-md-4": _vm.loading || !_vm.isBookingReviewed },
-          { "d-none": !_vm.loading && _vm.isBookingReviewed }
-        ]
-      },
+      { class: [{ "col-md-4": _vm.twoColumns }, { "d-none": _vm.oneColumn }] },
       [
-        _vm.loading
-          ? _c("div", [_vm._v("Loading...")])
-          : _c("div", [
+        _vm.loading ? _c("div", [_vm._v("Loading...")]) : _vm._e(),
+        _vm._v(" "),
+        _vm.hasBooking
+          ? _c("div", [
               _c("div", { staticClass: "card" }, [
                 _c("div", { staticClass: "card-body" }, [
                   _c(
@@ -56898,16 +56890,14 @@ var render = function() {
                 ])
               ])
             ])
+          : _vm._e()
       ]
     ),
     _vm._v(" "),
     _c(
       "div",
       {
-        class: [
-          { "col-md-8": _vm.loading || !_vm.isBookingReviewed },
-          { "col-md-12": !_vm.loading && _vm.isBookingReviewed }
-        ]
+        class: [{ "col-md-8": _vm.twoColumns }, { "col-md-12": _vm.oneColumn }]
       },
       [
         _vm.loading
