@@ -1,37 +1,73 @@
 <template>
-    <div>
-        <div v-if="loading">
-            <h2>Loading...</h2>
+    <div class="row">
+        <div
+            :class="[
+                { 'col-md-4': loading || !isBookingReviewed },
+                { 'd-none': !loading && isBookingReviewed }
+            ]"
+        >
+            <div v-if="loading">Loading...</div>
+            <div v-else>
+                <div class="card">
+                    <div class="card-body">
+                        <p>
+                            You have stayed at
+                            <router-link
+                                :to="{
+                                    name: 'bookable',
+                                    params: {
+                                        id: booking.bookable.bookable_id
+                                    }
+                                }"
+                                >{{ booking.bookable.title }}</router-link
+                            >
+                        </p>
+                        <p>From {{ booking.from }} to {{ booking.to }}</p>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div v-else>
-            <div v-if="bookingExists">
-                You have already reviewed this booking!
+        <div
+            :class="[
+                { 'col-md-8': loading || !isBookingReviewed },
+                { 'col-md-12': !loading && isBookingReviewed }
+            ]"
+        >
+            <div v-if="loading">
+                <h2>Loading...</h2>
             </div>
             <div v-else>
-                <div class="form-group">
-                    <label class="text-muted"
-                        >Rate the review (1 is worst - 5 is best)</label
-                    >
-                    <star-rating
-                        v-model="review.rating"
-                        class="fa-3x"
-                    ></star-rating>
+                <div v-if="isBookingReviewed">
+                    <h2>
+                        You have already reviewed this booking!
+                    </h2>
                 </div>
-                <div class="form-group">
-                    <label class="text-muted" for="content"
-                        >Leave a review</label
-                    >
-                    <textarea
-                        name="content"
-                        id="content"
-                        cols="30"
-                        rows="10"
-                        class="form-control"
-                    ></textarea>
+                <div v-else>
+                    <div class="form-group">
+                        <label class="text-muted"
+                            >Rate the review (1 is worst - 5 is best)</label
+                        >
+                        <star-rating
+                            v-model="review.rating"
+                            class="fa-3x"
+                        ></star-rating>
+                    </div>
+                    <div class="form-group">
+                        <label class="text-muted" for="content"
+                            >Leave a review</label
+                        >
+                        <textarea
+                            name="content"
+                            id="content"
+                            cols="30"
+                            rows="10"
+                            class="form-control"
+                        ></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-dark btn-block">
+                        Submit
+                    </button>
                 </div>
-                <button type="submit" class="btn btn-dark btn-block">
-                    Submit
-                </button>
             </div>
         </div>
     </div>
@@ -45,21 +81,45 @@ export default {
                 rating: null,
                 content: null
             },
-            bookingExists: null,
-            loading: false
+            existingReview: null,
+            loading: false,
+            booking: null
         };
     },
     created() {
         this.loading = true;
         axios
-            .get(
-                `http://bookable_items.test/api/reviews/${this.$route.params.id}`
-            )
-            .then(res => (this.bookingExists = res.data.data))
-            .catch(err => {
-                // error
+            .get(`/api/reviews/${this.$route.params.id}`)
+            .then(res => {
+                this.existingReview = res.data.data;
             })
-            .then(() => (this.loading = false));
+            .catch(err => {
+                if (
+                    err.response &&
+                    err.response.status &&
+                    err.response.status === 404
+                ) {
+                    return axios
+                        .get(`/api/booking-by-review/${this.$route.params.id}`)
+                        .then(res => {
+                            this.booking = res.data.data;
+                        });
+                }
+            })
+            .then(() => {
+                this.loading = false;
+            });
+    },
+    computed: {
+        isBookingReviewed() {
+            return this.hasReview || !this.booking;
+        },
+        hasReview() {
+            return this.existingReview !== null;
+        },
+        hasBooking() {
+            return this.booking !== null;
+        }
     }
 };
 </script>
