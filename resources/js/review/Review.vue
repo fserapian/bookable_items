@@ -71,6 +71,7 @@
                                 <textarea
                                     name="content"
                                     id="content"
+                                    v-model="review.content"
                                     cols="30"
                                     rows="10"
                                     class="form-control"
@@ -79,6 +80,8 @@
                             <button
                                 type="submit"
                                 class="btn btn-dark btn-block"
+                                :disabled="loading"
+                                @click="submit"
                             >
                                 Submit
                             </button>
@@ -97,6 +100,7 @@ export default {
     data() {
         return {
             review: {
+                id: null,
                 rating: null,
                 content: null
             },
@@ -108,15 +112,17 @@ export default {
     },
     created() {
         this.loading = true;
+        this.review.id = this.$route.params.id;
+
         axios
-            .get(`/api/reviews/${this.$route.params.id}`)
+            .get(`/api/reviews/${this.review.id}`)
             .then(res => {
                 this.existingReview = res.data.data;
             })
             .catch(err => {
                 if (is404(err)) {
                     return axios
-                        .get(`/api/booking-by-review/${this.$route.params.id}`)
+                        .get(`/api/booking-by-review/${this.review.id}`)
                         .then(res => {
                             this.booking = res.data.data;
                         })
@@ -147,8 +153,16 @@ export default {
         twoColumns() {
             return this.loading || !this.isBookingReviewed;
         }
+    },
+    methods: {
+        submit() {
+            this.loading = true;
+            axios
+                .post("/api/reviews", this.review)
+                .then(res => console.log("Submitted", res))
+                .catch(err => (this.error = true))
+                .then(() => (this.loading = false));
+        }
     }
 };
 </script>
-
-<style scoped></style>
