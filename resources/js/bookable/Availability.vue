@@ -22,13 +22,7 @@
                     placeholder="Start date"
                     v-model="from"
                 />
-                <div
-                    class="invalid-feedback"
-                    v-for="(error, i) in this.errorFor('from')"
-                    :key="'for' + i"
-                >
-                    {{ error }}
-                </div>
+                <v-errors :errors="errorFor('from')"></v-errors>
             </div>
             <div class="form-group col-md-6">
                 <label for="to" class="text-muted">To</label>
@@ -41,13 +35,7 @@
                     placeholder="End date"
                     v-model="to"
                 />
-                <div
-                    class="invalid-feedback"
-                    v-for="(error, i) in this.errorFor('to')"
-                    :key="'to' + i"
-                >
-                    {{ error }}
-                </div>
+                <v-errors :errors="errorFor('to')"></v-errors>
             </div>
             <button class="btn btn-dark btn-block" @click="check">Check</button>
         </form>
@@ -55,7 +43,11 @@
 </template>
 
 <script>
+import { is422 } from "../shared/utils/response";
+import validationErrors from "../shared/mixins/validationErrors";
+
 export default {
+    mixins: [validationErrors],
     props: {
         bookableId: String
     },
@@ -63,8 +55,7 @@ export default {
         return {
             from: "",
             to: "",
-            status: null,
-            errors: null
+            status: null
         };
     },
     methods: {
@@ -76,16 +67,11 @@ export default {
                 )
                 .then(res => (this.status = res.status))
                 .catch(err => {
-                    if (err.response.status === 422) {
+                    if (is422(err)) {
                         this.errors = err.response.data.errors;
                     }
                     this.status = err.response.status;
                 });
-        },
-        errorFor(field) {
-            return this.hasErrors && this.errors[field] !== null
-                ? this.errors[field]
-                : null;
         }
     },
     computed: {

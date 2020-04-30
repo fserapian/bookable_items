@@ -71,12 +71,18 @@
                                     cols="30"
                                     rows="10"
                                     class="form-control"
+                                    :class="{
+                                        'is-invalid': errorFor('content')
+                                    }"
                                 ></textarea>
+                                <v-errors
+                                    :errors="errorFor('content')"
+                                ></v-errors>
                             </div>
                             <button
                                 type="submit"
                                 class="btn btn-dark btn-block"
-                                :disabled="loading"
+                                :disabled="sending"
                                 @click="submit"
                             >
                                 Submit
@@ -90,18 +96,21 @@
 </template>
 
 <script>
-import { is404 } from "../shared/utils/response";
+import { is404, is422 } from "../shared/utils/response";
+import validationErrors from "../shared/mixins/validationErrors";
 
 export default {
+    mixins: [validationErrors],
     data() {
         return {
             review: {
                 id: null,
-                rating: null,
+                rating: 1,
                 content: null
             },
             existingReview: null,
             loading: false,
+            sending: false,
             booking: null,
             error: false
         };
@@ -152,13 +161,27 @@ export default {
     },
     methods: {
         submit() {
-            this.loading = true;
+            this.sending = true;
+            this.errors = null;
+
             axios
                 .post("/api/reviews", this.review)
                 .then(res => console.log("Submitted", res))
-                .catch(err => (this.error = true))
-                .then(() => (this.loading = false));
+                .catch(err => {
+                    if (is422(err)) {
+                        const errors = err.response.data.errors;
+                        if (errors["content"] && _.size(errors) === 1) {
+                            this.errors = errors;
+                            return;
+                        }
+
+                        this.error = true;
+                    }
+                })
+                .then(() => (this.sending = false));
         }
     }
 };
 </script>
+
+<style scoped></style>
