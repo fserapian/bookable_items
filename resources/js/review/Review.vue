@@ -1,10 +1,6 @@
 <template>
     <div class="review">
-        <div class="row" v-if="error">
-            <div class="col-md-12">
-                <h3>Something went wrong, please try again later</h3>
-            </div>
-        </div>
+        <fatal-error v-if="error"></fatal-error>
         <div v-else>
             <div class="row">
                 <div

@@ -7,6 +7,7 @@ import moment from "moment";
 
 import Index from "./Index";
 import StarRating from "./shared/components/StarRating";
+import FatalError from "./shared/components/FatalError";
 
 window.Vue = require("vue");
 
@@ -15,6 +16,7 @@ window.Vue = require("vue");
 // Vue.component("example2", require("./components/Example2.vue").default);
 
 Vue.component("star-rating", StarRating);
+Vue.component("fatal-error", FatalError);
 
 Vue.filter("fromNow", value => moment(value).fromNow());
 
