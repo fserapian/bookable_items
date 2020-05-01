@@ -2098,7 +2098,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   mixins: [_shared_mixins_validationErrors__WEBPACK_IMPORTED_MODULE_1__["default"]],
   props: {
-    bookableId: String
+    bookableId: [String, Number]
   },
   data: function data() {
     return {
@@ -2245,7 +2245,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
-    bookableId: String
+    bookableId: [String, Number]
   },
   data: function data() {
     return {
@@ -56824,7 +56824,7 @@ var render = function() {
           "nav",
           { staticClass: "my-2 my-md-0 mr-md-3" },
           [
-            _c("router-link", { attrs: { to: { name: "bookable" } } }, [
+            _c("router-link", { attrs: { to: { name: "home" } } }, [
               _vm._v("Second")
             ])
           ],
