@@ -37,7 +37,9 @@
                 />
                 <v-errors :errors="errorFor('to')"></v-errors>
             </div>
-            <button class="btn btn-dark btn-block" @click="check">Check</button>
+            <button class="btn btn-dark btn-block" @click.prevent="check">
+                Check
+            </button>
         </form>
     </div>
 </template>
@@ -53,14 +55,18 @@ export default {
     },
     data() {
         return {
-            from: "",
-            to: "",
+            from: this.$store.state.lastSearch.from,
+            to: this.$store.state.lastSearch.to,
             status: null
         };
     },
     methods: {
-        check(e) {
-            e.preventDefault();
+        check() {
+            this.$store.dispatch("setLastSearch", {
+                from: this.from,
+                to: this.to
+            });
+
             axios
                 .get(
                     `/api/bookables/${this.bookableId}/availability?from=${this.from}&to=${this.to}`

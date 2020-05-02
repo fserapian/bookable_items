@@ -20,7 +20,23 @@
 </template>
 
 <script>
-export default {};
+import { mapState } from "vuex";
+
+export default {
+    data() {
+        return {
+            lastSearch: this.$store.state.lastSearch,
+        };
+    },
+    computed: {
+        ...mapState({
+            lastSearchComputed: state => state.lastSearch
+        }),
+        simpleCalculation() {
+            return 5 + 10;
+        }
+    }
+};
 </script>
 
 <style scoped>
