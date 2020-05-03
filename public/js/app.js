@@ -2118,6 +2118,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2129,14 +2138,16 @@ __webpack_require__.r(__webpack_exports__);
     return {
       from: this.$store.state.lastSearch.from,
       to: this.$store.state.lastSearch.to,
-      status: null
+      status: null,
+      loading: false
     };
   },
   methods: {
     check: function check() {
       var _this = this;
 
-      this.$store.dispatch("setLastSearch", {
+      this.loading = true;
+      this.$store.commit("setLastSearch", {
         from: this.from,
         to: this.to
       });
@@ -2148,6 +2159,8 @@ __webpack_require__.r(__webpack_exports__);
         }
 
         _this.status = err.response.status;
+      }).then(function () {
+        return _this.loading = false;
       });
     }
   },
@@ -56887,21 +56900,27 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("h5", [
-      _c("span", [_vm._v("Check Availability")]),
-      _vm._v(" "),
-      _vm.noAvailability
-        ? _c("span", { staticClass: "text-danger text-uppercase" }, [
-            _vm._v("(not available)")
-          ])
-        : _vm._e(),
-      _vm._v(" "),
-      _vm.hasAvailability
-        ? _c("span", { staticClass: "text-success text-uppercase" }, [
-            _vm._v("(available)")
-          ])
-        : _vm._e()
-    ]),
+    _c(
+      "h5",
+      [
+        _c("span", [_vm._v("Check Availability")]),
+        _vm._v(" "),
+        _c("transition", { attrs: { name: "fade" } }, [
+          _vm.noAvailability
+            ? _c("span", { staticClass: "text-danger text-uppercase" }, [
+                _vm._v("(not available)")
+              ])
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.hasAvailability
+            ? _c("span", { staticClass: "text-success text-uppercase" }, [
+                _vm._v("(available)")
+              ])
+            : _vm._e()
+        ])
+      ],
+      1
+    ),
     _vm._v(" "),
     _c("form", { staticClass: "form-row" }, [
       _c(
@@ -56990,6 +57009,7 @@ var render = function() {
         "button",
         {
           staticClass: "btn btn-dark btn-block",
+          attrs: { disabled: _vm.loading },
           on: {
             click: function($event) {
               $event.preventDefault()
@@ -56997,7 +57017,16 @@ var render = function() {
             }
           }
         },
-        [_vm._v("\n            Check\n        ")]
+        [
+          !_vm.loading ? _c("span", [_vm._v("Check")]) : _vm._e(),
+          _vm._v(" "),
+          _vm.loading
+            ? _c("span", [
+                _c("i", { staticClass: "fas fa-sync fa-spin" }),
+                _vm._v("  Checking\n            ")
+              ])
+            : _vm._e()
+        ]
       )
     ])
   ])

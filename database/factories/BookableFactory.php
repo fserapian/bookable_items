@@ -20,5 +20,6 @@ $factory->define(Bookable::class, function (Faker $faker) use ($bookableNames) {
     return [
         'title' => $faker->city . ' ' . Arr::random($bookableNames),
         'description' => $faker->text(),
+        'price' => $faker->numberBetween(15, 600)
     ];
 });

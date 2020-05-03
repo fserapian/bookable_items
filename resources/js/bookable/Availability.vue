@@ -2,12 +2,14 @@
     <div>
         <h5>
             <span>Check Availability</span>
-            <span v-if="noAvailability" class="text-danger text-uppercase"
-                >(not available)</span
-            >
-            <span v-if="hasAvailability" class="text-success text-uppercase"
-                >(available)</span
-            >
+            <transition name="fade">
+                <span v-if="noAvailability" class="text-danger text-uppercase"
+                    >(not available)</span
+                >
+                <span v-if="hasAvailability" class="text-success text-uppercase"
+                    >(available)</span
+                >
+            </transition>
         </h5>
 
         <form class="form-row">
@@ -37,8 +39,15 @@
                 />
                 <v-errors :errors="errorFor('to')"></v-errors>
             </div>
-            <button class="btn btn-dark btn-block" @click.prevent="check">
-                Check
+            <button
+                class="btn btn-dark btn-block"
+                @click.prevent="check"
+                :disabled="loading"
+            >
+                <span v-if="!loading">Check</span>
+                <span v-if="loading">
+                    <i class="fas fa-sync fa-spin"></i>&nbsp;&nbsp;Checking
+                </span>
             </button>
         </form>
     </div>
@@ -57,12 +66,15 @@ export default {
         return {
             from: this.$store.state.lastSearch.from,
             to: this.$store.state.lastSearch.to,
-            status: null
+            status: null,
+            loading: false
         };
     },
     methods: {
         check() {
-            this.$store.dispatch("setLastSearch", {
+            this.loading = true;
+
+            this.$store.commit("setLastSearch", {
                 from: this.from,
                 to: this.to
             });
@@ -77,7 +89,8 @@ export default {
                         this.errors = err.response.data.errors;
                     }
                     this.status = err.response.status;
-                });
+                })
+                .then(() => (this.loading = false));
         }
     },
     computed: {
