@@ -1,7 +1,7 @@
 <template>
     <div>
         <h5>
-            <span>Check Availability</span>
+            <h4 class="availability-title">Check Availability</h4>
             <transition name="fade">
                 <span v-if="noAvailability" class="text-danger text-uppercase"
                     >(not available)</span
@@ -71,7 +71,7 @@ export default {
         };
     },
     methods: {
-        check() {
+        async check() {
             this.loading = true;
 
             this.$store.commit("setLastSearch", {
@@ -79,18 +79,22 @@ export default {
                 to: this.to
             });
 
-            axios
-                .get(
-                    `/api/bookables/${this.bookableId}/availability?from=${this.from}&to=${this.to}`
-                )
-                .then(res => (this.status = res.status))
-                .catch(err => {
-                    if (is422(err)) {
-                        this.errors = err.response.data.errors;
-                    }
-                    this.status = err.response.status;
-                })
-                .then(() => (this.loading = false));
+            try {
+                this.status = (
+                    await axios.get(
+                        `/api/bookables/${this.bookableId}/availability?from=${this.from}&to=${this.to}`
+                    )
+                ).status;
+                this.$emit("availability", this.hasAvailability);
+            } catch (err) {
+                if (is422(err)) {
+                    this.errors = err.response.data.errors;
+                }
+                this.status = err.response.status;
+                this.$emit("availability", this.hasAvailability);
+            }
+
+            this.loading = false;
         }
     },
     computed: {
@@ -110,5 +114,9 @@ export default {
 <style scoped>
 .is-invalid {
     background-image: none;
+}
+
+.availability-title {
+    display: inline;
 }
 </style>

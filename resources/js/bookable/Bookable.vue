@@ -13,7 +13,16 @@
             <div class="col-md-4">
                 <availability
                     :bookable-id="this.$route.params.id"
+                    @availability="checkPrice($event)"
+                    class="mb-4"
                 ></availability>
+
+                <transition name="fade">
+                    <price-breakdown
+                        v-if="price"
+                        :price="price"
+                    ></price-breakdown>
+                </transition>
             </div>
         </div>
         <div class="row">
@@ -28,15 +37,19 @@
 <script>
 import Availability from "./Availability";
 import ReviewList from "./ReviewList";
+import PriceBreakdown from "./PriceBreakdown";
+import { mapState } from "vuex";
 
 export default {
     components: {
         Availability,
-        ReviewList
+        ReviewList,
+        PriceBreakdown
     },
     data() {
         return {
-            bookable: null
+            bookable: null,
+            price: null
         };
     },
     created() {
@@ -46,6 +59,28 @@ export default {
             )
             .then(res => (this.bookable = res.data.data))
             .catch(err => console.log(err));
+    },
+    computed: mapState({
+        lastSearch: "lastSearch"
+    }),
+    methods: {
+        checkPrice(hasAvailability) {
+            if (!hasAvailability) {
+                this.price = null;
+                return;
+            }
+
+            axios
+                .get(
+                    `/api/bookables/${this.bookable.id}/price?from=${this.lastSearch.from}&to=${this.lastSearch.to}`
+                )
+                .then(res => {
+                    this.price = res.data.data;
+                })
+                .catch(err => {
+                    this.price = null;
+                });
+        }
     }
 };
 </script>
