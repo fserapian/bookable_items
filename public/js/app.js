@@ -2292,6 +2292,25 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -2318,11 +2337,22 @@ __webpack_require__.r(__webpack_exports__);
     });
   },
   computed: Object(vuex__WEBPACK_IMPORTED_MODULE_3__["mapState"])({
-    lastSearch: "lastSearch"
+    lastSearch: "lastSearch",
+    inBasketAlready: function inBasketAlready(state) {
+      var _this2 = this;
+
+      if (this.bookable === null) {
+        return false;
+      }
+
+      return state.basket.items.reduce(function (result, item) {
+        return result || item.bookable.id === _this2.bookable.id;
+      }, false);
+    }
   }),
   methods: {
     checkPrice: function checkPrice(hasAvailability) {
-      var _this2 = this;
+      var _this3 = this;
 
       if (!hasAvailability) {
         this.price = null;
@@ -2330,9 +2360,9 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       axios.get("/api/bookables/".concat(this.bookable.id, "/price?from=").concat(this.lastSearch.from, "&to=").concat(this.lastSearch.to)).then(function (res) {
-        _this2.price = res.data.data;
+        _this3.price = res.data.data;
       })["catch"](function (err) {
-        _this2.price = null;
+        _this3.price = null;
       });
     },
     addToBasket: function addToBasket() {
@@ -2341,6 +2371,9 @@ __webpack_require__.r(__webpack_exports__);
         price: this.price,
         dates: this.lastSearch
       });
+    },
+    removeFromBasket: function removeFromBasket() {
+      this.$store.commit("removeFromBasket", this.bookable.id);
     }
   }
 });
@@ -58008,11 +58041,39 @@ var render = function() {
               ? _c(
                   "button",
                   {
-                    staticClass: "btn btn-outline-dark btn-block",
+                    staticClass: "btn btn-outline-dark btn-block mb-3",
+                    attrs: { disabled: _vm.inBasketAlready },
                     on: { click: _vm.addToBasket }
                   },
                   [_vm._v("\n                    Book Now\n                ")]
                 )
+              : _vm._e()
+          ]),
+          _vm._v(" "),
+          _c("transition", { attrs: { name: "fade" } }, [
+            _vm.inBasketAlready
+              ? _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-outline-secondary btn-block mb-3",
+                    on: { click: _vm.removeFromBasket }
+                  },
+                  [
+                    _vm._v(
+                      "\n                    Remove From Basket\n                "
+                    )
+                  ]
+                )
+              : _vm._e()
+          ]),
+          _vm._v(" "),
+          _c("transition", { attrs: { name: "fade" } }, [
+            _vm.inBasketAlready
+              ? _c("small", [
+                  _vm._v(
+                    "You added this item to the basket, if you want to\n                    change dates, please remove it from the basket\n                    first."
+                  )
+                ])
               : _vm._e()
           ])
         ],
@@ -75830,7 +75891,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     removeFromBasket: function removeFromBasket(state, payload) {
       state.basket.items = state.basket.items.filter(function (item) {
-        return item.bookable.id !== playload;
+        return item.bookable.id !== payload;
       });
     }
   },

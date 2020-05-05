@@ -17,7 +17,7 @@ export default {
         },
         removeFromBasket(state, payload) {
             state.basket.items = state.basket.items.filter(
-                item => item.bookable.id !== playload
+                item => item.bookable.id !== payload
             );
         }
     },

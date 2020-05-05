@@ -32,12 +32,31 @@
 
                 <transition name="fade">
                     <button
-                        class="btn btn-outline-dark btn-block"
+                        class="btn btn-outline-dark btn-block mb-3"
                         @click="addToBasket"
+                        :disabled="inBasketAlready"
                         v-if="price"
                     >
                         Book Now
                     </button>
+                </transition>
+
+                <transition name="fade">
+                    <button
+                        class="btn btn-outline-secondary btn-block mb-3"
+                        v-if="inBasketAlready"
+                        @click="removeFromBasket"
+                    >
+                        Remove From Basket
+                    </button>
+                </transition>
+
+                <transition name="fade">
+                    <small v-if="inBasketAlready"
+                        >You added this item to the basket, if you want to
+                        change dates, please remove it from the basket
+                        first.</small
+                    >
                 </transition>
             </div>
         </div>
@@ -71,7 +90,18 @@ export default {
             .catch(err => console.log(err));
     },
     computed: mapState({
-        lastSearch: "lastSearch"
+        lastSearch: "lastSearch",
+        inBasketAlready(state) {
+            if (this.bookable === null) {
+                return false;
+            }
+
+            return state.basket.items.reduce(
+                (result, item) =>
+                    result || item.bookable.id === this.bookable.id,
+                false
+            );
+        }
     }),
     methods: {
         checkPrice(hasAvailability) {
@@ -97,6 +127,9 @@ export default {
                 price: this.price,
                 dates: this.lastSearch
             });
+        },
+        removeFromBasket() {
+            this.$store.commit("removeFromBasket", this.bookable.id);
         }
     }
 };
