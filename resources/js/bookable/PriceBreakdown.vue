@@ -13,7 +13,6 @@
             <div>Total Price</div>
             <div>${{ price.total_price }}</div>
         </div>
-        <button class="btn btn-outline-dark btn-block">Checkout</button>
     </div>
 </template>
 

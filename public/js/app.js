@@ -2278,6 +2278,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -2320,6 +2330,13 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (err) {
         _this2.price = null;
       });
+    },
+    addToBasket: function addToBasket() {
+      this.$store.commit("addToBasket", {
+        bookable: this.bookable,
+        price: this.price,
+        dates: this.lastSearch
+      });
     }
   }
 });
@@ -2335,7 +2352,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
 //
 //
 //
@@ -57976,7 +57992,20 @@ var render = function() {
                 : _vm._e()
             ],
             1
-          )
+          ),
+          _vm._v(" "),
+          _c("transition", { attrs: { name: "fade" } }, [
+            _vm.price
+              ? _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-outline-dark btn-block",
+                    on: { click: _vm.addToBasket }
+                  },
+                  [_vm._v("\n                    Book Now\n                ")]
+                )
+              : _vm._e()
+          ])
         ],
         1
       )
@@ -58029,10 +58058,6 @@ var render = function() {
         _c("div", [_vm._v("Total Price")]),
         _vm._v(" "),
         _c("div", [_vm._v("$" + _vm._s(_vm.price.total_price))])
-      ]),
-      _vm._v(" "),
-      _c("button", { staticClass: "btn btn-outline-dark btn-block" }, [
-        _vm._v("Checkout")
       ])
     ],
     2
@@ -75782,11 +75807,22 @@ __webpack_require__.r(__webpack_exports__);
     lastSearch: {
       from: null,
       to: null
+    },
+    basket: {
+      items: []
     }
   },
   mutations: {
     setLastSearch: function setLastSearch(state, payload) {
       state.lastSearch = payload;
+    },
+    addToBasket: function addToBasket(state, payload) {
+      state.basket.items.push(payload);
+    },
+    removeFromBasket: function removeFromBasket(state, payload) {
+      state.basket.items = state.basket.items.filter(function (item) {
+        return item.bookable.id !== playload;
+      });
     }
   },
   actions: {
