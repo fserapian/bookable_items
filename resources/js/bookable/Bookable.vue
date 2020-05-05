@@ -89,20 +89,17 @@ export default {
             .then(res => (this.bookable = res.data.data))
             .catch(err => console.log(err));
     },
-    computed: mapState({
-        lastSearch: "lastSearch",
-        inBasketAlready(state) {
+    computed: {
+        ...mapState({
+            lastSearch: "lastSearch"
+        }),
+        inBasketAlready() {
             if (this.bookable === null) {
                 return false;
             }
-
-            return state.basket.items.reduce(
-                (result, item) =>
-                    result || item.bookable.id === this.bookable.id,
-                false
-            );
+            return this.$store.getters.inBasketAlready(this.bookable.id);
         }
-    }),
+    },
     methods: {
         checkPrice(hasAvailability) {
             if (!hasAvailability) {
