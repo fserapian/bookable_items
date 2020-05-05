@@ -57947,18 +57947,7 @@ var render = function() {
                 return _vm.checkPrice($event)
               }
             }
-          }),
-          _vm._v(" "),
-          _c(
-            "transition",
-            { attrs: { name: "fade" } },
-            [
-              _vm.price
-                ? _c("price-breakdown", { attrs: { price: _vm.price } })
-                : _vm._e()
-            ],
-            1
-          )
+          })
         ],
         1
       )
@@ -57974,7 +57963,23 @@ var render = function() {
         1
       ),
       _vm._v(" "),
-      _c("div", { staticClass: "col-md-4" })
+      _c(
+        "div",
+        { staticClass: "col-md-4" },
+        [
+          _c(
+            "transition",
+            { attrs: { name: "fade" } },
+            [
+              _vm.price
+                ? _c("price-breakdown", { attrs: { price: _vm.price } })
+                : _vm._e()
+            ],
+            1
+          )
+        ],
+        1
+      )
     ])
   ])
 }
@@ -58020,7 +58025,7 @@ var render = function() {
         )
       }),
       _vm._v(" "),
-      _c("div", { staticClass: "mb-2 d-flex justify-content-between" }, [
+      _c("div", { staticClass: "mb-2 d-flex justify-content-between mb-3" }, [
         _c("div", [_vm._v("Total Price")]),
         _vm._v(" "),
         _c("div", [_vm._v("$" + _vm._s(_vm.price.total_price))])

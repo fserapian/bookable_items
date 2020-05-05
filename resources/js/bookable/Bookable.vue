@@ -16,7 +16,13 @@
                     @availability="checkPrice($event)"
                     class="mb-4"
                 ></availability>
-
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-8">
+                <review-list :bookable-id="this.$route.params.id"></review-list>
+            </div>
+            <div class="col-md-4">
                 <transition name="fade">
                     <price-breakdown
                         v-if="price"
@@ -24,12 +30,6 @@
                     ></price-breakdown>
                 </transition>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-md-8">
-                <review-list :bookable-id="this.$route.params.id"></review-list>
-            </div>
-            <div class="col-md-4"></div>
         </div>
     </div>
 </template>

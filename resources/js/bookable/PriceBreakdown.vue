@@ -9,7 +9,7 @@
             <div>{{ days }} x ${{ p }}</div>
             <div>${{ price.total_price }}</div>
         </div>
-        <div class="mb-2 d-flex justify-content-between">
+        <div class="mb-2 d-flex justify-content-between mb-3">
             <div>Total Price</div>
             <div>${{ price.total_price }}</div>
         </div>
