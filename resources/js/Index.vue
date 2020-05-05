@@ -8,9 +8,14 @@
                     >{Bookable_Items}</router-link
                 >
             </h5>
-            <nav class="my-2 my-md-0 mr-md-3">
-                <router-link :to="{ name: 'home' }">Second</router-link>
-            </nav>
+            <div class="my-2 my-md-0 mr-md-3">
+                <router-link :to="{ name: 'home' }"
+                    >Basket
+                    <span class="badge badge-secondary" v-if="itemsInBasket">{{
+                        itemsInBasket
+                    }}</span>
+                </router-link>
+            </div>
         </div>
 
         <div class="container mt-3">
@@ -21,6 +26,7 @@
 
 <script>
 import { mapState } from "vuex";
+import { mapGetters } from "vuex";
 
 export default {
     data() {
@@ -32,9 +38,9 @@ export default {
         ...mapState({
             lastSearchComputed: state => state.lastSearch
         }),
-        simpleCalculation() {
-            return 5 + 10;
-        }
+        ...mapGetters({
+            itemsInBasket: "itemsInBasket"
+        })
     }
 };
 </script>
@@ -43,5 +49,9 @@ export default {
 .co-logo {
     color: #000;
     text-decoration: none;
+}
+
+a {
+    color: #000;
 }
 </style>

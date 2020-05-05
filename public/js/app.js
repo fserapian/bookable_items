@@ -2053,6 +2053,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -2064,11 +2070,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     lastSearchComputed: function lastSearchComputed(state) {
       return state.lastSearch;
     }
-  }), {
-    simpleCalculation: function simpleCalculation() {
-      return 5 + 10;
-    }
-  })
+  }), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])({
+    itemsInBasket: "itemsInBasket"
+  }))
 });
 
 /***/ }),
@@ -7263,7 +7267,7 @@ exports = module.exports = __webpack_require__(/*! ../../node_modules/css-loader
 
 
 // module
-exports.push([module.i, "\n.co-logo[data-v-147fb424] {\n    color: #000;\n    text-decoration: none;\n}\n", ""]);
+exports.push([module.i, "\n.co-logo[data-v-147fb424] {\n    color: #000;\n    text-decoration: none;\n}\na[data-v-147fb424] {\n    color: #000;\n}\n", ""]);
 
 // exports
 
@@ -57738,11 +57742,16 @@ var render = function() {
         ),
         _vm._v(" "),
         _c(
-          "nav",
+          "div",
           { staticClass: "my-2 my-md-0 mr-md-3" },
           [
             _c("router-link", { attrs: { to: { name: "home" } } }, [
-              _vm._v("Second")
+              _vm._v("Basket\n                "),
+              _vm.itemsInBasket
+                ? _c("span", { staticClass: "badge badge-secondary" }, [
+                    _vm._v(_vm._s(_vm.itemsInBasket))
+                  ])
+                : _vm._e()
             ])
           ],
           1
@@ -75836,6 +75845,11 @@ __webpack_require__.r(__webpack_exports__);
       if (lastSearch) {
         context.commit("setLastSearch", JSON.parse(lastSearch));
       }
+    }
+  },
+  getters: {
+    itemsInBasket: function itemsInBasket(state) {
+      return state.basket.items.length;
     }
   }
 });
