@@ -2177,7 +2177,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 _this.loading = true;
 
-                _this.$store.commit("setLastSearch", {
+                _this.$store.dispatch("setLastSearch", {
                   from: _this.from,
                   to: _this.to
                 });

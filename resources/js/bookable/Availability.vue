@@ -74,7 +74,7 @@ export default {
         async check() {
             this.loading = true;
 
-            this.$store.commit("setLastSearch", {
+            this.$store.dispatch("setLastSearch", {
                 from: this.from,
                 to: this.to
             });
