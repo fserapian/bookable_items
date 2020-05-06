@@ -9,7 +9,7 @@
                 >
             </h5>
             <div class="my-2 my-md-0 mr-md-3">
-                <router-link :to="{ name: 'home' }"
+                <router-link :to="{ name: 'basket' }"
                     >Basket
                     <span class="badge badge-secondary" v-if="itemsInBasket">{{
                         itemsInBasket
@@ -53,5 +53,9 @@ export default {
 
 a {
     color: #000;
+}
+
+.badge {
+    font-size: 0.8rem;
 }
 </style>
