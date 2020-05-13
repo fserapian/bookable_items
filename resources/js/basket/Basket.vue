@@ -1,9 +1,119 @@
 <template>
     <div>
         <div class="row">
-            <div class="col-md-8">
+            <di v class="col-md-8">
                 <h3>Checkout Form</h3>
-            </div>
+                <div class="form-row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="firstName">First Name</label>
+                            <input
+                                type="text"
+                                name="firstName"
+                                id="firstName"
+                                class="form-control"
+                            />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="lastName">Last Name</label>
+                            <input
+                                type="text"
+                                name="lastName"
+                                id="lastName"
+                                class="form-control"
+                            />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input
+                                    type="text"
+                                    name="email"
+                                    id="email"
+                                    class="form-control"
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="form-group">
+                                <label for="street">Street</label>
+                                <input
+                                    type="text"
+                                    name="street"
+                                    id="street"
+                                    class="form-control"
+                                />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="form-group">
+                                <label for="city">City</label>
+                                <input
+                                    type="text"
+                                    name="city"
+                                    id="city"
+                                    class="form-control"
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <div class="form-group">
+                                <label for="country">Country</label>
+                                <input
+                                    type="text"
+                                    name="country"
+                                    id="country"
+                                    class="form-control"
+                                />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <div class="form-group">
+                                <label for="province">Province</label>
+                                <input
+                                    type="text"
+                                    name="province"
+                                    id="province"
+                                    class="form-control"
+                                />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <div class="form-group">
+                                <label for="postalCode">Postal Code</label>
+                                <input
+                                    type="text"
+                                    name="postalCode"
+                                    id="postalCode"
+                                    class="form-control"
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr />
+                <button class="btn btn-block btn-success">Book Now</button>
+            </di>
             <div class="col-md-4">
                 <div class="d-flex justify-content-between">
                     <h4>Your Basket</h4>
