@@ -2263,8 +2263,30 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      customer: {
+        firstName: null,
+        lastName: null,
+        email: null,
+        street: null,
+        city: null,
+        country: null,
+        province: null,
+        postalCode: null
+      }
+    };
+  },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(["itemsInBasket"]), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])({
     basket: function basket(state) {
       return state.basket.items;
@@ -58082,8 +58104,25 @@ var render = function() {
                 ]),
                 _vm._v(" "),
                 _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.customer.firstName,
+                      expression: "customer.firstName"
+                    }
+                  ],
                   staticClass: "form-control",
-                  attrs: { type: "text", name: "firstName", id: "firstName" }
+                  attrs: { type: "text", name: "firstName", id: "firstName" },
+                  domProps: { value: _vm.customer.firstName },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.customer, "firstName", $event.target.value)
+                    }
+                  }
                 })
               ])
             ]),
@@ -58095,8 +58134,25 @@ var render = function() {
                 ]),
                 _vm._v(" "),
                 _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.customer.lastName,
+                      expression: "customer.lastName"
+                    }
+                  ],
                   staticClass: "form-control",
-                  attrs: { type: "text", name: "lastName", id: "lastName" }
+                  attrs: { type: "text", name: "lastName", id: "lastName" },
+                  domProps: { value: _vm.customer.lastName },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.customer, "lastName", $event.target.value)
+                    }
+                  }
                 })
               ])
             ])
@@ -58109,8 +58165,25 @@ var render = function() {
                   _c("label", { attrs: { for: "email" } }, [_vm._v("Email")]),
                   _vm._v(" "),
                   _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.customer.email,
+                        expression: "customer.email"
+                      }
+                    ],
                     staticClass: "form-control",
-                    attrs: { type: "text", name: "email", id: "email" }
+                    attrs: { type: "text", name: "email", id: "email" },
+                    domProps: { value: _vm.customer.email },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.customer, "email", $event.target.value)
+                      }
+                    }
                   })
                 ])
               ])
@@ -58124,8 +58197,25 @@ var render = function() {
                   _c("label", { attrs: { for: "street" } }, [_vm._v("Street")]),
                   _vm._v(" "),
                   _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.customer.street,
+                        expression: "customer.street"
+                      }
+                    ],
                     staticClass: "form-control",
-                    attrs: { type: "text", name: "street", id: "street" }
+                    attrs: { type: "text", name: "street", id: "street" },
+                    domProps: { value: _vm.customer.street },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.customer, "street", $event.target.value)
+                      }
+                    }
                   })
                 ])
               ])
@@ -58137,8 +58227,25 @@ var render = function() {
                   _c("label", { attrs: { for: "city" } }, [_vm._v("City")]),
                   _vm._v(" "),
                   _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.customer.city,
+                        expression: "customer.city"
+                      }
+                    ],
                     staticClass: "form-control",
-                    attrs: { type: "text", name: "city", id: "city" }
+                    attrs: { type: "text", name: "city", id: "city" },
+                    domProps: { value: _vm.customer.city },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.customer, "city", $event.target.value)
+                      }
+                    }
                   })
                 ])
               ])
@@ -58154,8 +58261,25 @@ var render = function() {
                   ]),
                   _vm._v(" "),
                   _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.customer.country,
+                        expression: "customer.country"
+                      }
+                    ],
                     staticClass: "form-control",
-                    attrs: { type: "text", name: "country", id: "country" }
+                    attrs: { type: "text", name: "country", id: "country" },
+                    domProps: { value: _vm.customer.country },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.customer, "country", $event.target.value)
+                      }
+                    }
                   })
                 ])
               ])
@@ -58169,8 +58293,25 @@ var render = function() {
                   ]),
                   _vm._v(" "),
                   _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.customer.province,
+                        expression: "customer.province"
+                      }
+                    ],
                     staticClass: "form-control",
-                    attrs: { type: "text", name: "province", id: "province" }
+                    attrs: { type: "text", name: "province", id: "province" },
+                    domProps: { value: _vm.customer.province },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.customer, "province", $event.target.value)
+                      }
+                    }
                   })
                 ])
               ])
@@ -58184,11 +58325,32 @@ var render = function() {
                   ]),
                   _vm._v(" "),
                   _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.customer.postalCode,
+                        expression: "customer.postalCode"
+                      }
+                    ],
                     staticClass: "form-control",
                     attrs: {
                       type: "text",
                       name: "postalCode",
                       id: "postalCode"
+                    },
+                    domProps: { value: _vm.customer.postalCode },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          _vm.customer,
+                          "postalCode",
+                          $event.target.value
+                        )
+                      }
                     }
                   })
                 ])

@@ -12,6 +12,7 @@
                                 name="firstName"
                                 id="firstName"
                                 class="form-control"
+                                v-model="customer.firstName"
                             />
                         </div>
                     </div>
@@ -23,6 +24,7 @@
                                 name="lastName"
                                 id="lastName"
                                 class="form-control"
+                                v-model="customer.lastName"
                             />
                         </div>
                     </div>
@@ -37,6 +39,7 @@
                                     name="email"
                                     id="email"
                                     class="form-control"
+                                    v-model="customer.email"
                                 />
                             </div>
                         </div>
@@ -52,6 +55,7 @@
                                     name="street"
                                     id="street"
                                     class="form-control"
+                                    v-model="customer.street"
                                 />
                             </div>
                         </div>
@@ -65,6 +69,7 @@
                                     name="city"
                                     id="city"
                                     class="form-control"
+                                    v-model="customer.city"
                                 />
                             </div>
                         </div>
@@ -80,6 +85,7 @@
                                     name="country"
                                     id="country"
                                     class="form-control"
+                                    v-model="customer.country"
                                 />
                             </div>
                         </div>
@@ -93,6 +99,7 @@
                                     name="province"
                                     id="province"
                                     class="form-control"
+                                    v-model="customer.province"
                                 />
                             </div>
                         </div>
@@ -106,6 +113,7 @@
                                     name="postalCode"
                                     id="postalCode"
                                     class="form-control"
+                                    v-model="customer.postalCode"
                                 />
                             </div>
                         </div>
@@ -172,6 +180,20 @@
 import { mapState, mapGetters } from "vuex";
 
 export default {
+    data() {
+        return {
+            customer: {
+                firstName: null,
+                lastName: null,
+                email: null,
+                street: null,
+                city: null,
+                country: null,
+                province: null,
+                postalCode: null
+            }
+        };
+    },
     computed: {
         ...mapGetters(["itemsInBasket"]),
         ...mapState({
