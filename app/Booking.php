@@ -15,6 +15,11 @@ class Booking extends Model
         return $this->belongsTo(Bookable::class);
     }
 
+    public function address()
+    {
+        return $this->belongsTo(Address::class);
+    }
+
     // Make sure that date ranges don't overlap
     public function scopeBetweenDates(Builder $query, $from, $to)
     {
