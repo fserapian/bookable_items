@@ -2271,19 +2271,26 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
+      loading: false,
       customer: {
-        firstName: null,
-        lastName: null,
+        first_name: null,
+        last_name: null,
         email: null,
         street: null,
         city: null,
         country: null,
         province: null,
-        postalCode: null
+        postal_code: null
       }
     };
   },
@@ -2291,7 +2298,28 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     basket: function basket(state) {
       return state.basket.items;
     }
-  }))
+  })),
+  methods: {
+    book: function book() {
+      var _this = this;
+
+      this.loading = true;
+      axios.post("/api/checkout", {
+        customer: this.customer,
+        bookings: this.basket.map(function (item) {
+          return {
+            bookable_id: item.bookable.id,
+            from: item.dates.from,
+            to: item.dates.to
+          };
+        })
+      }).then(function () {
+        return _this.loading = false;
+      })["catch"](function (err) {
+        return console.log(err);
+      });
+    }
+  }
 });
 
 /***/ }),
@@ -58108,19 +58136,19 @@ var render = function() {
                     {
                       name: "model",
                       rawName: "v-model",
-                      value: _vm.customer.firstName,
-                      expression: "customer.firstName"
+                      value: _vm.customer.first_name,
+                      expression: "customer.first_name"
                     }
                   ],
                   staticClass: "form-control",
                   attrs: { type: "text", name: "firstName", id: "firstName" },
-                  domProps: { value: _vm.customer.firstName },
+                  domProps: { value: _vm.customer.first_name },
                   on: {
                     input: function($event) {
                       if ($event.target.composing) {
                         return
                       }
-                      _vm.$set(_vm.customer, "firstName", $event.target.value)
+                      _vm.$set(_vm.customer, "first_name", $event.target.value)
                     }
                   }
                 })
@@ -58138,19 +58166,19 @@ var render = function() {
                     {
                       name: "model",
                       rawName: "v-model",
-                      value: _vm.customer.lastName,
-                      expression: "customer.lastName"
+                      value: _vm.customer.last_name,
+                      expression: "customer.last_name"
                     }
                   ],
                   staticClass: "form-control",
                   attrs: { type: "text", name: "lastName", id: "lastName" },
-                  domProps: { value: _vm.customer.lastName },
+                  domProps: { value: _vm.customer.last_name },
                   on: {
                     input: function($event) {
                       if ($event.target.composing) {
                         return
                       }
-                      _vm.$set(_vm.customer, "lastName", $event.target.value)
+                      _vm.$set(_vm.customer, "last_name", $event.target.value)
                     }
                   }
                 })
@@ -58329,8 +58357,8 @@ var render = function() {
                       {
                         name: "model",
                         rawName: "v-model",
-                        value: _vm.customer.postalCode,
-                        expression: "customer.postalCode"
+                        value: _vm.customer.postal_code,
+                        expression: "customer.postal_code"
                       }
                     ],
                     staticClass: "form-control",
@@ -58339,7 +58367,7 @@ var render = function() {
                       name: "postalCode",
                       id: "postalCode"
                     },
-                    domProps: { value: _vm.customer.postalCode },
+                    domProps: { value: _vm.customer.postal_code },
                     on: {
                       input: function($event) {
                         if ($event.target.composing) {
@@ -58347,7 +58375,7 @@ var render = function() {
                         }
                         _vm.$set(
                           _vm.customer,
-                          "postalCode",
+                          "postal_code",
                           $event.target.value
                         )
                       }
@@ -58360,9 +58388,20 @@ var render = function() {
           _vm._v(" "),
           _c("hr"),
           _vm._v(" "),
-          _c("button", { staticClass: "btn btn-block btn-success" }, [
-            _vm._v("Book Now")
-          ])
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-block btn-primary",
+              attrs: { type: "submit" },
+              on: {
+                click: function($event) {
+                  $event.preventDefault()
+                  return _vm.book($event)
+                }
+              }
+            },
+            [_vm._v("\n                Book Now\n            ")]
+          )
         ]),
         _vm._v(" "),
         _c(

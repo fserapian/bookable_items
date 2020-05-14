@@ -12,7 +12,7 @@
                                 name="firstName"
                                 id="firstName"
                                 class="form-control"
-                                v-model="customer.firstName"
+                                v-model="customer.first_name"
                             />
                         </div>
                     </div>
@@ -24,7 +24,7 @@
                                 name="lastName"
                                 id="lastName"
                                 class="form-control"
-                                v-model="customer.lastName"
+                                v-model="customer.last_name"
                             />
                         </div>
                     </div>
@@ -113,14 +113,20 @@
                                     name="postalCode"
                                     id="postalCode"
                                     class="form-control"
-                                    v-model="customer.postalCode"
+                                    v-model="customer.postal_code"
                                 />
                             </div>
                         </div>
                     </div>
                 </div>
                 <hr />
-                <button class="btn btn-block btn-success">Book Now</button>
+                <button
+                    type="submit"
+                    class="btn btn-block btn-primary"
+                    @click.prevent="book"
+                >
+                    Book Now
+                </button>
             </di>
             <div class="col-md-4">
                 <div class="d-flex justify-content-between">
@@ -182,15 +188,16 @@ import { mapState, mapGetters } from "vuex";
 export default {
     data() {
         return {
+            loading: false,
             customer: {
-                firstName: null,
-                lastName: null,
+                first_name: null,
+                last_name: null,
                 email: null,
                 street: null,
                 city: null,
                 country: null,
                 province: null,
-                postalCode: null
+                postal_code: null
             }
         };
     },
@@ -199,6 +206,24 @@ export default {
         ...mapState({
             basket: state => state.basket.items
         })
+    },
+    methods: {
+        book() {
+            this.loading = true;
+            axios
+                .post("/api/checkout", {
+                    customer: this.customer,
+                    bookings: this.basket.map(item => {
+                        return {
+                            bookable_id: item.bookable.id,
+                            from: item.dates.from,
+                            to: item.dates.to
+                        };
+                    })
+                })
+                .then(() => (this.loading = false))
+                .catch(err => console.log(err));
+        }
     }
 };
 </script>
