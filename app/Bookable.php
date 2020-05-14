@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 
@@ -12,13 +13,27 @@ class Bookable extends Model
         return $this->hasMany(Booking::class);
     }
 
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
+
     public function availableFor($from, $to): bool
     {
         return $this->bookings()->betweenDates($from, $to)->count() === 0;
     }
 
-    public function reviews()
+    public function priceFor($from, $to): array
     {
-        return $this->hasMany(Review::class);
+        $days = (new Carbon($from))->diffInDays(new Carbon($to)) + 1;
+
+        $totalPrice = $this->price * $days;
+
+        return [
+            'total_price' => $totalPrice,
+            'breakdown' => [
+                $this->price => $days
+            ]
+        ];
     }
 }
