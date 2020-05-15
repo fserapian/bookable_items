@@ -13,7 +13,15 @@
                                 id="firstName"
                                 class="form-control"
                                 v-model="customer.first_name"
+                                :class="{
+                                    'is-invalid': errorFor(
+                                        'customer.first_name'
+                                    )
+                                }"
                             />
+                            <v-errors
+                                :errors="errorFor('customer.first_name')"
+                            ></v-errors>
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -25,7 +33,13 @@
                                 id="lastName"
                                 class="form-control"
                                 v-model="customer.last_name"
+                                :class="{
+                                    'is-invalid': errorFor('customer.last_name')
+                                }"
                             />
+                            <v-errors
+                                :errors="errorFor('customer.last_name')"
+                            ></v-errors>
                         </div>
                     </div>
                 </div>
@@ -40,7 +54,13 @@
                                     id="email"
                                     class="form-control"
                                     v-model="customer.email"
+                                    :class="{
+                                        'is-invalid': errorFor('customer.email')
+                                    }"
                                 />
+                                <v-errors
+                                    :errors="errorFor('customer.email')"
+                                ></v-errors>
                             </div>
                         </div>
                     </div>
@@ -56,7 +76,15 @@
                                     id="street"
                                     class="form-control"
                                     v-model="customer.street"
+                                    :class="{
+                                        'is-invalid': errorFor(
+                                            'customer.street'
+                                        )
+                                    }"
                                 />
+                                <v-errors
+                                    :errors="errorFor('customer.street')"
+                                ></v-errors>
                             </div>
                         </div>
                     </div>
@@ -70,7 +98,13 @@
                                     id="city"
                                     class="form-control"
                                     v-model="customer.city"
+                                    :class="{
+                                        'is-invalid': errorFor('customer.city')
+                                    }"
                                 />
+                                <v-errors
+                                    :errors="errorFor('customer.city')"
+                                ></v-errors>
                             </div>
                         </div>
                     </div>
@@ -86,7 +120,15 @@
                                     id="country"
                                     class="form-control"
                                     v-model="customer.country"
+                                    :class="{
+                                        'is-invalid': errorFor(
+                                            'customer.country'
+                                        )
+                                    }"
                                 />
+                                <v-errors
+                                    :errors="errorFor('customer.country')"
+                                ></v-errors>
                             </div>
                         </div>
                     </div>
@@ -100,7 +142,15 @@
                                     id="province"
                                     class="form-control"
                                     v-model="customer.province"
+                                    :class="{
+                                        'is-invalid': errorFor(
+                                            'customer.province'
+                                        )
+                                    }"
                                 />
+                                <v-errors
+                                    :errors="errorFor('customer.province')"
+                                ></v-errors>
                             </div>
                         </div>
                     </div>
@@ -114,7 +164,15 @@
                                     id="postalCode"
                                     class="form-control"
                                     v-model="customer.postal_code"
+                                    :class="{
+                                        'is-invalid': errorFor(
+                                            'customer.postal_code'
+                                        )
+                                    }"
                                 />
+                                <v-errors
+                                    :errors="errorFor('customer.postal_code')"
+                                ></v-errors>
                             </div>
                         </div>
                     </div>
@@ -123,6 +181,7 @@
                 <button
                     type="submit"
                     class="btn btn-block btn-primary"
+                    :disabled="loading"
                     @click.prevent="book"
                 >
                     Book Now
@@ -189,8 +248,10 @@
 
 <script>
 import { mapState, mapGetters } from "vuex";
+import validationErrors from "../shared/mixins/validationErrors";
 
 export default {
+    mixins: [validationErrors],
     data() {
         return {
             loading: false,
@@ -215,6 +276,7 @@ export default {
     methods: {
         book() {
             this.loading = true;
+            this.errors = null;
             axios
                 .post("/api/checkout", {
                     customer: this.customer,
@@ -227,7 +289,12 @@ export default {
                     })
                 })
                 .then(() => this.$store.dispatch("clearBasket"))
-                .catch(err => console.log(err))
+                .catch(
+                    err =>
+                        (this.errors = err.response
+                            ? err.response.data.errors
+                            : null)
+                )
                 .then(() => (this.loading = false));
         }
     }
