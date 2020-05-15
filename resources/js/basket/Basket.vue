@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="row">
-            <di v class="col-md-8">
+            <div class="col-md-8" v-if="itemsInBasket">
                 <h3>Checkout Form</h3>
                 <div class="form-row">
                     <div class="col-md-6">
@@ -127,7 +127,12 @@
                 >
                     Book Now
                 </button>
-            </di>
+            </div>
+            <div class="col-md-8" v-else>
+                <div class="jumbotron jumbotron-fluid text-center text-muted">
+                    Empty
+                </div>
+            </div>
             <div class="col-md-4">
                 <div class="d-flex justify-content-between">
                     <h4>Your Basket</h4>
@@ -221,8 +226,9 @@ export default {
                         };
                     })
                 })
-                .then(() => (this.loading = false))
-                .catch(err => console.log(err));
+                .then(() => this.$store.dispatch("clearBasket"))
+                .catch(err => console.log(err))
+                .then(() => (this.loading = false));
         }
     }
 };
