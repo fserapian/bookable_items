@@ -1,7 +1,7 @@
 <template>
     <div class="text-center error">
         <i class="fas fa-check-circle"></i>
-        <h1>Thank you</h1>
+        <h1>Success</h1>
         <h2>
             <slot></slot>
         </h2>
