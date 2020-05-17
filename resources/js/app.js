@@ -34,7 +34,7 @@ const app = new Vue({
     components: {
         appIndex: Index
     },
-    beforeCreate() {
+    async beforeCreate() {
         this.$store.dispatch("loadStoredState");
     }
 });
