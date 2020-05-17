@@ -72,8 +72,7 @@ export default {
         return {
             email: null,
             password: null,
-            loading: false,
-            errors: null
+            loading: false
         };
     },
     methods: {
@@ -91,10 +90,7 @@ export default {
 
                 await axios.get("/user");
             } catch (err) {
-                this.errors =
-                    err.response && err.response.data.errros
-                        ? err.response.data.errors
-                        : null;
+                this.errors = err.response ? err.response.data.errors : null;
             }
 
             this.loading = false;

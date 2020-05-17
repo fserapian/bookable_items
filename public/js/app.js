@@ -2167,8 +2167,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     return {
       email: null,
       password: null,
-      loading: false,
-      errors: null
+      loading: false
     };
   },
   methods: {
@@ -2204,7 +2203,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 11:
                 _context.prev = 11;
                 _context.t0 = _context["catch"](2);
-                _this.errors = _context.t0.response && _context.t0.response.data.errros ? _context.t0.response.data.errors : null;
+                _this.errors = _context.t0.response ? _context.t0.response.data.errors : null;
 
               case 14:
                 _this.loading = false;
