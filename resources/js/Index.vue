@@ -1,7 +1,7 @@
 <template>
     <div>
         <div
-            class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm"
+            class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-4 bg-white border-bottom shadow-sm"
         >
             <h5 class="my-0 mr-md-auto font-weight-normal">
                 <router-link :to="{ name: 'home' }" class="co-logo"
@@ -50,15 +50,15 @@ export default {
         }),
         ...mapGetters({
             itemsInBasket: "itemsInBasket"
-        }),
-        method: {
-            logout() {
-                try {
-                    axios.post("/logout");
-                    this.$store.dispatch("logout");
-                } catch (err) {
-                    this.$store.dispatch("logout");
-                }
+        })
+    },
+    methods: {
+        logout() {
+            try {
+                axios.post("/logout");
+                this.$store.dispatch("logout");
+            } catch (err) {
+                this.$store.dispatch("logout");
             }
         }
     }

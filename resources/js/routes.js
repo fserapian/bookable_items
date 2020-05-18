@@ -4,6 +4,7 @@ import Bookable from "./bookable/Bookable";
 import Review from "./review/Review";
 import Basket from "./basket/Basket";
 import Login from "./auth/Login";
+import Register from "./auth/Register";
 
 const routes = [
     {
@@ -30,6 +31,11 @@ const routes = [
         path: "/auth/login",
         name: "login",
         component: Login
+    },
+    {
+        path: "/auth/register",
+        name: "register",
+        component: Register
     }
 ];
 
