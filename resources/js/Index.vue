@@ -16,6 +16,15 @@
                     }}</span>
                 </router-link>
             </div>
+            <div class="my-2 my-md-0 mr-md-3" v-if="!isLoggedIn">
+                <router-link :to="{ name: 'login' }">Login</router-link>
+            </div>
+            <div class="my-2 my-md-0 mr-md-3" v-if="!isLoggedIn">
+                <router-link :to="{ name: 'register' }">Sign Up</router-link>
+            </div>
+            <div class="my-2 my-md-0 mr-md-3" v-if="isLoggedIn">
+                <a href="#" @click="logout">Logout</a>
+            </div>
         </div>
 
         <div class="container mt-3">
@@ -36,11 +45,22 @@ export default {
     },
     computed: {
         ...mapState({
-            lastSearchComputed: state => state.lastSearch
+            lastSearchComputed: state => state.lastSearch,
+            isLoggedIn: state => state.isLoggedIn
         }),
         ...mapGetters({
             itemsInBasket: "itemsInBasket"
-        })
+        }),
+        method: {
+            logout() {
+                try {
+                    axios.post("/logout");
+                    this.$store.dispatch("logout");
+                } catch (err) {
+                    this.$store.dispatch("logout");
+                }
+            }
+        }
     }
 };
 </script>

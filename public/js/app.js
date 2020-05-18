@@ -2058,6 +2058,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2069,10 +2078,24 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])({
     lastSearchComputed: function lastSearchComputed(state) {
       return state.lastSearch;
+    },
+    isLoggedIn: function isLoggedIn(state) {
+      return state.isLoggedIn;
     }
   }), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])({
     itemsInBasket: "itemsInBasket"
-  }))
+  }), {
+    method: {
+      logout: function logout() {
+        try {
+          axios.post("/logout");
+          this.$store.dispatch("logout");
+        } catch (err) {
+          this.$store.dispatch("logout");
+        }
+      }
+    }
+  })
 });
 
 /***/ }),
@@ -58315,7 +58338,41 @@ var render = function() {
             ])
           ],
           1
-        )
+        ),
+        _vm._v(" "),
+        !_vm.isLoggedIn
+          ? _c(
+              "div",
+              { staticClass: "my-2 my-md-0 mr-md-3" },
+              [
+                _c("router-link", { attrs: { to: { name: "login" } } }, [
+                  _vm._v("Login")
+                ])
+              ],
+              1
+            )
+          : _vm._e(),
+        _vm._v(" "),
+        !_vm.isLoggedIn
+          ? _c(
+              "div",
+              { staticClass: "my-2 my-md-0 mr-md-3" },
+              [
+                _c("router-link", { attrs: { to: { name: "register" } } }, [
+                  _vm._v("Sign Up")
+                ])
+              ],
+              1
+            )
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.isLoggedIn
+          ? _c("div", { staticClass: "my-2 my-md-0 mr-md-3" }, [
+              _c("a", { attrs: { href: "#" }, on: { click: _vm.logout } }, [
+                _vm._v("Logout")
+              ])
+            ])
+          : _vm._e()
       ]
     ),
     _vm._v(" "),
@@ -76328,6 +76385,15 @@ vue__WEBPACK_IMPORTED_MODULE_4___default.a.filter("fromNow", function (value) {
 vue__WEBPACK_IMPORTED_MODULE_4___default.a.use(vue_router__WEBPACK_IMPORTED_MODULE_2__["default"]);
 vue__WEBPACK_IMPORTED_MODULE_4___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_5__["default"]);
 var store = new vuex__WEBPACK_IMPORTED_MODULE_5__["default"].Store(_store__WEBPACK_IMPORTED_MODULE_6__["default"]);
+window.axios.interceptors.response.use(function (response) {
+  return response;
+}, function (error) {
+  if (error.response.status === 401) {
+    store.dispatch("logout");
+  }
+
+  return Promise.reject(error);
+});
 var app = new vue__WEBPACK_IMPORTED_MODULE_4___default.a({
   el: "#app",
   router: _routes__WEBPACK_IMPORTED_MODULE_1__["default"],
