@@ -15,7 +15,7 @@ class BookableReviewController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function __invoke(Request $request, $id)
+    public function __invoke($id)
     {
         $bookable = Bookable::findOrFail($id);
 
